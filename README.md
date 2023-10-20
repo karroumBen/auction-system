@@ -7,3 +7,4 @@
 ## Bootstrap application
 
 1. run this script ```npm install & npm run start```
+2. enjoy the ride
