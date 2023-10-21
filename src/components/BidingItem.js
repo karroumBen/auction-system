@@ -81,7 +81,7 @@ export default function ProductSimple() {
             _focus={{
               bg: 'gray.200',
             }}>
-            Message
+            follow
           </Button>
           <Button
             flex={1}
@@ -98,7 +98,7 @@ export default function ProductSimple() {
             _focus={{
               bg: 'blue.500',
             }}>
-            Follow
+            Bid
           </Button>
         </Stack>
         </Stack>
