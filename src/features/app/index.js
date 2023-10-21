@@ -1,14 +1,49 @@
+import { Box, Center, Heading, Stack, Wrap, WrapItem } from '@chakra-ui/react'
 import React from 'react'
-import { ChakraProvider } from '@chakra-ui/react'
+import BidingItem from '../../components/BidingItem';
 
 
 const index = () => {
     return (
-      <ChakraProvider>
-        <div>
-          main app
-        </div>
-      </ChakraProvider>
+        <section className="home-page">
+          <Heading fontSize='2xl' mb={2}>
+            Biding items
+          </Heading>
+
+
+          <Wrap spacing='15px'>
+            <WrapItem>
+              <BidingItem />
+            </WrapItem>
+            <WrapItem>
+              <BidingItem />
+            </WrapItem>
+            <WrapItem>
+              <BidingItem />
+            </WrapItem>
+            <WrapItem>
+              <BidingItem />
+            </WrapItem>
+
+            <WrapItem>
+              <BidingItem />
+            </WrapItem>
+
+            <WrapItem>
+              <BidingItem />
+            </WrapItem>
+
+            <WrapItem>
+              <BidingItem />
+            </WrapItem>
+            <WrapItem>
+              <BidingItem />
+            </WrapItem>
+            <WrapItem>
+              <BidingItem />
+            </WrapItem>
+          </Wrap>
+        </section>
     )
 }
 
