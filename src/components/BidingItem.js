@@ -16,7 +16,7 @@ const IMAGE =
 
 export default function ProductSimple() {
   return (
-    <Center py={12}>
+    <Center>
       <Box
         role={'group'}
         p={4}
@@ -29,7 +29,6 @@ export default function ProductSimple() {
         zIndex={1}>
         <Box
           rounded={'lg'}
-          mt={-8}
           pos={'relative'}
           _after={{
             transition: 'all .3s ease',

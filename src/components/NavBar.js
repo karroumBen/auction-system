@@ -3,18 +3,18 @@
 import {
   Box,
   Flex,
-  Text,
   IconButton,
   Button,
   Stack,
   useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
+  Image,
 } from '@chakra-ui/react'
 import {
   HamburgerIcon,
   CloseIcon,
 } from '@chakra-ui/icons'
+import LOGO from '../assets/images/bid.png';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
@@ -44,12 +44,14 @@ export default function WithSubnavigation() {
         </Flex>
 
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color={useColorModeValue('teal.500', 'white')}>
-            <strong>BidAuction</strong>
-          </Text>
+          <Image
+            rounded={'lg'}
+            height={'40px'}
+            width={'40px'}
+            objectFit={'cover'}
+            src={LOGO}
+            alt="bid-logo"
+          />
         </Flex>
 
         <Stack
@@ -57,7 +59,7 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
+          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'/login'}>
             Sign In
           </Button>
           <Button
@@ -67,7 +69,7 @@ export default function WithSubnavigation() {
             fontWeight={600}
             color={'white'}
             bg={'teal.400'}
-            href={'#'}
+            href={'/register'}
             _hover={{
               bg: 'teal.300',
             }}>
