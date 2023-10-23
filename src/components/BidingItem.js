@@ -10,11 +10,18 @@ import {
   Image,
   Button,
 } from '@chakra-ui/react'
+import { useNavigate } from 'react-router'
 
 const IMAGE =
   'https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
 
-export default function ProductSimple() {
+export default function BidingItem() {
+  const navigate = useNavigate();
+
+  const displayDetails = () => {
+    navigate('/items/1');
+  }
+
   return (
     <Center>
       <Box
@@ -74,31 +81,33 @@ export default function ProductSimple() {
 
           <Stack mt={4} direction={'row'} spacing={4}>
           <Button
-            flex={1}
+            onClick={displayDetails}
+            flex={6}
             fontSize={'sm'}
-            rounded={'full'}
+            rounded={'md'}
             _focus={{
               bg: 'gray.200',
             }}>
-            follow
+            View
           </Button>
-          <Button
-            flex={1}
-            fontSize={'sm'}
-            rounded={'full'}
-            bg={'blue.400'}
-            color={'white'}
-            boxShadow={
-              '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
-            }
-            _hover={{
-              bg: 'blue.500',
-            }}
-            _focus={{
-              bg: 'blue.500',
-            }}>
-            Bid
-          </Button>
+
+            <Button
+              flex={6}
+              fontSize={'sm'}
+              rounded={'md'}
+              bg={'teal.400'}
+              color={'white'}
+              boxShadow={
+                '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
+              }
+              _hover={{
+                bg: 'teal.500',
+              }}
+              _focus={{
+                bg: 'teal.500',
+              }}>
+              Bid
+            </Button>
         </Stack>
         </Stack>
       </Box>

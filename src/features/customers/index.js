@@ -1,9 +1,10 @@
 import React from 'react'
+import BidingList from '../../components/BidingList'
 
 const index = () => {
   return (
     <div>
-      customers
+      <BidingList />
     </div>
   )
 }

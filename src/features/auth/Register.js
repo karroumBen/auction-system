@@ -92,6 +92,7 @@ const Register = () => {
                       type="text"
                       placeholder="John"
                       name="firstName"
+                      isRequired
                       value={userDetails.firstName}
                       onChange={handleInputChange}
                     />
@@ -115,6 +116,7 @@ const Register = () => {
                 <Input
                   type="email"
                   name="email"
+                  isRequired
                   value={userDetails.email}
                   onChange={handleInputChange}/>
               </FormControl>
@@ -123,6 +125,7 @@ const Register = () => {
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
+                    isRequired
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Password"
                     name="password"
@@ -144,7 +147,7 @@ const Register = () => {
                 <FormLabel>Choose User type:</FormLabel>
                 <Select name="userType" value={userDetails.userType} onChange={handleInputChange}>
                   <option value="customer">Customer</option>
-                    <option value="seller">Seller</option>
+                  <option value="seller">Seller</option>
                 </Select>
               </FormControl>
 

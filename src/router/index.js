@@ -5,6 +5,7 @@ import SellerList from '../features/sellers';
 import MainLayout from '../components/MainLayout';
 import Login from '../features/auth/Login';
 import Register from '../features/auth/Register';
+import ProductDetails from '../components/ProductDetails';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/sellers",
         element: <SellerList />,
+      },
+      {
+        path: "/items/:id",
+        element: <ProductDetails />,
       }
     ]
   },

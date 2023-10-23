@@ -19,12 +19,14 @@ import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { login } from '../../store/auth/actions';
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const [credentials, setCredentials] = useState({ email: '', password: ''});
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(credentials);
+    setIsLoading(true);
     login(credentials).then(({ data }) => {
       console.log(data);
     }).catch((error) => {
@@ -36,6 +38,9 @@ const Login = () => {
         isClosable: true,
         position: 'top-right'
       })
+    })
+    .finally(() => {
+      setIsLoading(false);
     })
   };
 
@@ -67,6 +72,7 @@ const Login = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
+                  isRequired
                   value={credentials.email}
                   onChange={handleInputChange}/>
               </FormControl>
@@ -77,6 +83,7 @@ const Login = () => {
                   type="password"
                   placeholder="Password"
                   name="password"
+                  isRequired
                   value={credentials.password}
                   onChange={handleInputChange}
                 />
@@ -96,7 +103,12 @@ const Login = () => {
                   color={'white'}
                   _hover={{
                     bg: 'blue.500',
-                  }}>
+                  }}
+                  isLoading={isLoading}
+                  loadingText='in progress'
+                  colorScheme='blue'
+                  variant='outline'
+                  spinnerPlacement='end'>
                   Sign in
                 </Button>
               </Stack>
