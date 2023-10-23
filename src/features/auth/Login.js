@@ -13,15 +13,30 @@ import {
   Text,
   useColorModeValue,
   Link,
+  useToast,
 } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { login } from '../../store/auth/actions';
 
 const Login = () => {
+  const toast = useToast();
   const [credentials, setCredentials] = useState({ email: '', password: ''});
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(credentials);
+    login(credentials).then(({ data }) => {
+      console.log(data);
+    }).catch((error) => {
+      toast({
+        title: 'Ooopsie!',
+        description: "Something went wrong, please do not freak out",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    })
   };
 
   const handleInputChange = (e) => {

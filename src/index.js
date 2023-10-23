@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import router from './router';
-import { RouterProvider } from 'react-router-dom';
 import './network';
+import { RouterProvider } from 'react-router-dom';
 import { store } from './store'
 import { Provider } from 'react-redux'
 

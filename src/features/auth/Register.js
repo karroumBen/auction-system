@@ -16,10 +16,13 @@ import {
   useColorModeValue,
   Link,
   Select,
+  useToast,
 } from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { register } from '../../store/auth/actions'
 
 const Register = () => {
+  const toast = useToast();
   const [userDetails, setUserDetails] = useState({
     firstName: '',
     lastName: '',
@@ -37,6 +40,29 @@ const Register = () => {
   const handleFormSubmition = (e) => {
     e.preventDefault();
     console.log(userDetails);
+    const { firstName, lastName } = userDetails;
+    userDetails.name = firstName + lastName;
+
+    register(userDetails).then(({ data }) => {
+      console.log(data);
+      toast({
+        title: 'Yuupii',
+        description: "Successfully done",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    }).catch((error) => {
+      toast({
+        title: 'Ooopsie!',
+        description: "Something went wrong, please do not freak out",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    })
   }
 
   return (
@@ -117,7 +143,7 @@ const Register = () => {
               <FormControl id="type" isRequired>
                 <FormLabel>Choose User type:</FormLabel>
                 <Select name="userType" value={userDetails.userType} onChange={handleInputChange}>
-                <option value="customer">Customer</option>
+                  <option value="customer">Customer</option>
                     <option value="seller">Seller</option>
                 </Select>
               </FormControl>
