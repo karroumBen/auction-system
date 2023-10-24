@@ -1,11 +1,12 @@
 import React from 'react'
 import SellerItem from '../../components/SellerItem'
+import ListNavBar from '../../components/ListNavBar';
 
 const index = () => {
   return (
     <>
     <section>
-      <h2>Biding List</h2>
+      <ListNavBar title="Seller's products"/>
     </section>
 
     <section className='seller-items'>

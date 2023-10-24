@@ -9,16 +9,29 @@ import {
   useColorModeValue,
   useDisclosure,
   Image,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuGroup,
+  MenuItem,
+  MenuDivider,
 } from '@chakra-ui/react'
 import {
   HamburgerIcon,
   CloseIcon,
 } from '@chakra-ui/icons'
 import LOGO from '../assets/images/bid.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetUser } from '../store/auth';
 
 export default function WithSubnavigation() {
-  const { isOpen, onToggle } = useDisclosure()
-
+  const { isOpen, onToggle } = useDisclosure();
+  const dispatch = useDispatch();
+  const auth  = useSelector((state) => state.auth);
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    dispatch(resetUser());
+  }
   return (
     <Box>
       <Flex
@@ -54,28 +67,48 @@ export default function WithSubnavigation() {
           />
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}>
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'/login'}>
-            Sign In
-          </Button>
-          <Button
-            as={'a'}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'teal.400'}
-            href={'/register'}
-            _hover={{
-              bg: 'teal.300',
-            }}>
-            Sign Up
-          </Button>
-        </Stack>
+
+        { auth.isAuthenticated ?
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={'flex-end'}
+            direction={'row'}
+            spacing={6}>
+            <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'/login'}>
+              Sign In
+            </Button>
+            <Button
+              as={'a'}
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'teal.400'}
+              href={'/register'}
+              _hover={{
+                bg: 'teal.300',
+              }}>
+              Sign Up
+            </Button>
+          </Stack>
+          :
+          <Menu>
+            <MenuButton as={Button} colorScheme='pink'>
+              { auth.name }
+            </MenuButton>
+            <MenuList>
+              <MenuGroup title='Profile'>
+                <MenuItem>My Account</MenuItem>
+                <MenuItem>Favorite list </MenuItem>
+              </MenuGroup>
+              <MenuDivider />
+
+              <MenuGroup>
+                <MenuItem as='button' onClick={logout}>Log out</MenuItem>
+              </MenuGroup>
+            </MenuList>
+          </Menu>
+        }
       </Flex>
     </Box>
   )

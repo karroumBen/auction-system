@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NavBar from './NavBar'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 import '../../src/assets/styles/global.css';
 
 
+
 const MainLayout = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      navigate('/login');
+    }
+  }, [])
+
     return (
       <ChakraProvider>
         <NavBar />

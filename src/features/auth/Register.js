@@ -29,7 +29,7 @@ const Register = () => {
     email: '',
     licenseNumber: '',
     password: '',
-    userType: 'Customer',
+    userType: 'customer',
   })
   const [showPassword, setShowPassword] = useState(false)
 

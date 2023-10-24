@@ -17,8 +17,13 @@ import {
 } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { login } from '../../store/auth/actions';
+import { setUser } from '../../store/auth';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const [credentials, setCredentials] = useState({ email: '', password: ''});
@@ -28,7 +33,25 @@ const Login = () => {
     console.log(credentials);
     setIsLoading(true);
     login(credentials).then(({ data }) => {
-      console.log(data);
+      const { accessToken, email, name, seller} = data;
+      if(accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+      }
+      dispatch(setUser({ accessToken, email, name, isSeller: seller, isAuthenticated: true }));
+
+      toast({
+        title: 'Hura',
+        description: "Successfully logged in",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right'
+      })
+
+      return seller
+    })
+    .then((seller) => {
+      navigate(seller? '/sellers': '/customers')
     }).catch((error) => {
       toast({
         title: 'Ooopsie!',
@@ -89,15 +112,10 @@ const Login = () => {
                 />
               </FormControl>
 
-              <Stack spacing={10}>
-                <Stack
-                  direction={{ base: 'column', sm: 'row' }}
-                  align={'start'}
-                  justify={'space-between'}>
-                  <Checkbox>Remember me</Checkbox>
-                </Stack>
+              <Stack spacing={10} mt={5}>
 
                 <Button
+                  size={'lg'}
                   onClick={handleLogin} 
                   bg={'blue.400'}
                   color={'white'}
