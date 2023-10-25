@@ -19,7 +19,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import { register } from '../../store/auth/actions'
+import { register } from '../../services/auth'
 
 const Register = () => {
   const toast = useToast();
@@ -29,7 +29,7 @@ const Register = () => {
     email: '',
     licenseNumber: '',
     password: '',
-    userType: 'Customer',
+    userType: 'customer',
   })
   const [showPassword, setShowPassword] = useState(false)
 

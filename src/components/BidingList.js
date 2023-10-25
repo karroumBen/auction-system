@@ -1,11 +1,12 @@
 import React from 'react'
 import BidingItem from './BidingItem';
+import ListNavBar from './ListNavBar';
 
 const BidingList = () => {
   return (
     <>
       <section>
-        <h2>Biding List</h2>
+        <ListNavBar title="Biding items"/>
       </section>
 
       <section className='biding-list'>

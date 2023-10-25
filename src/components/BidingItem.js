@@ -33,7 +33,7 @@ export default function BidingItem() {
         boxShadow={'xl'}
         rounded={'lg'}
         pos={'relative'}
-        zIndex={1}>
+        zIndex={0}>
         <Box
           rounded={'lg'}
           pos={'relative'}

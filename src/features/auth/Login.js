@@ -6,7 +6,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Button,
   Heading,
@@ -16,19 +15,41 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { login } from '../../store/auth/actions';
+import { login } from '../../services/auth';
+import { setUser } from '../../store/auth';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const [credentials, setCredentials] = useState({ email: '', password: ''});
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(credentials);
     setIsLoading(true);
     login(credentials).then(({ data }) => {
-      console.log(data);
+      const { accessToken, email, name, seller} = data;
+      if(accessToken) {
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('username', name);
+        localStorage.setItem('isAuthenticated', true);
+        localStorage.setItem('isSeller', seller);
+      }
+      dispatch(setUser({ accessToken, email, name, isSeller: seller, isAuthenticated: true }));
+
+      toast({
+        title: 'Hura',
+        description: "Successfully logged in",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right'
+      })
+      
+      navigate(seller? '/sellers': '/customers')
     }).catch((error) => {
       toast({
         title: 'Ooopsie!',
@@ -38,8 +59,7 @@ const Login = () => {
         isClosable: true,
         position: 'top-right'
       })
-    })
-    .finally(() => {
+    }).finally(() => {
       setIsLoading(false);
     })
   };
@@ -89,15 +109,10 @@ const Login = () => {
                 />
               </FormControl>
 
-              <Stack spacing={10}>
-                <Stack
-                  direction={{ base: 'column', sm: 'row' }}
-                  align={'start'}
-                  justify={'space-between'}>
-                  <Checkbox>Remember me</Checkbox>
-                </Stack>
+              <Stack spacing={10} mt={5}>
 
                 <Button
+                  size={'lg'}
                   onClick={handleLogin} 
                   bg={'blue.400'}
                   color={'white'}
