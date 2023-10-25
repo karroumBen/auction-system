@@ -1,60 +1,187 @@
-import { Button, Image, Stack } from '@chakra-ui/react'
-import React from 'react'
+import { CheckCircleIcon, DeleteIcon, EditIcon, UnlockIcon } from '@chakra-ui/icons';
+import { Box, Flex, HStack, IconButton, Image, ListIcon, Tag, Text, Tooltip, useToast } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { deleteProduct, publishProduct } from '../services/seller';
 
-const IMAGE =
-  'https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+const SellerItem = ({ product, openForEdit, reloadItems }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
+  const {
+    id,
+    name,
+    description,
+    quantity,
+    imageLink,
+    bidDueDate,
+    startingPrice,
+    status,
+    paymentDueDate } = product;
 
-const SellerItem = () => {
+  const onEdit = () => openForEdit(product);
+  const onPublish = () => {
+    setIsLoading(true);
+
+    publishProduct(id).then(({ data }) => {
+      toast({
+        title: 'Yuupii',
+        description: "Successfully done",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right'
+      });
+
+      reloadItems();
+    }).catch((error) => {
+      toast({
+        title: 'Ooopsie!',
+        description: "Something went wrong, We got your back",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+  };
+  const onDelete = () => {
+    setIsLoading(true);
+
+    deleteProduct(id).then(({ data }) => {
+      toast({
+        title: 'Yuupii',
+        description: "Successfully done",
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right'
+      });
+
+      reloadItems();
+    }).catch((error) => {
+      toast({
+        title: 'Ooopsie!',
+        description: "Something went wrong, We got your back",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+        position: 'top-right'
+      })
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
+  };
+
+  const getColor = (status) => {
+    const statusColor = {
+      'PENDING': 'gray.500',
+      'OPEN': 'blue.300',
+      'CLOSED': 'red.300',
+      'PAID': 'teal.300',
+    }
+
+    return statusColor[status];
+  }
   return (
-    <article className="seller-item">
-        <div className="item-image">
-          <Image
-              rounded={'lg'}
-              height={65}
-              width={65}
-              objectFit={'cover'}
-              src={IMAGE}
-              alt="bid-logo"
-            />
-        </div>
+    <Flex
+      border="1px"
+      borderColor="gray.300"
+      p="3"
+      rounded="md"
+      shadow="md"
+      mb="3"
+      direction="row"
+      alignItems="center"
+    >
+      {/* First Section - Image */}
+      <Box flex="1">
+        <Image
+          src={imageLink}
+          alt="bid-logo"
+          rounded="lg"
+          height={65}
+          width={65}
+          objectFit="cover"
+        />
+      </Box>
 
-        <div className="item-details">
-          <h3>Chair with 3 legs</h3>
-          <p>$500</p>
-        </div>
+      {/* Second Section - Details */}
+      <Box flex="3" pr="4">
+        <Text fontSize="xl" fontWeight="semibold">
+          {name}
+        </Text>
+        <Text fontSize="md" color="gray.600">
+          {description}
+        </Text>
+        <HStack spacing="2" mt="2">
+          <Text fontSize="sm">
+            <strong>Quantity:</strong> {quantity} <CheckCircleIcon name="check" color="green.400" />
+          </Text>
+          <Text fontSize="sm">
+            <strong>Bid Due Date:</strong> {new Date(bidDueDate).toLocaleDateString()}
+          </Text>
+          <Text fontSize="sm">
+            <strong>Starting Price:</strong> ${startingPrice.toFixed(2)}
+          </Text>
+          <Text fontSize="sm">
+            <strong>Status:</strong>
+            <Tag variant='solid' bg={getColor(status)}>
+              {status}
+            </Tag> 
+          </Text>
+          <Text fontSize="sm">
+            <strong>Payment Due Date:</strong> {new Date(paymentDueDate).toLocaleDateString()}
+          </Text>
+        </HStack>
+      </Box>
 
-        <div className="item-actions">
-          <Stack
-            flex={{ base: 1, md: 0 }}
-            justify={'flex-end'}
-            direction={'row'}
-            spacing={6}>
-            <Button bg={'blue.400'} as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}
-            _hover={{
-              bg: 'blue.300',
-            }}
-            color={'white'}
-            >
-              Edit
-            </Button>
+      {/* Third Section - Buttons with Icons and Texts in the Same Line */}
+      <Box flex="1" display="flex" flexDirection="column" justifyContent="space-between">
 
-            <Button
-              as={'a'}
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              fontWeight={600}
-              color={'white'}
-              bg={'red.400'}
-              href={'#'}
-              _hover={{
-                bg: 'red.300',
-              }}>
-              delete
-            </Button>
-          </Stack>
-        </div>
-      </article>
+        <HStack spacing="2" justifyContent="flex-end">
+
+        <Tooltip hasArrow label='Publish' fontSize='md'>
+          <IconButton
+            colorScheme="blue"
+            aria-label="Edit"
+            icon={<UnlockIcon />}
+            onClick={onPublish}
+            isDisabled={status !== 'PENDING'}
+          >
+            Publish
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip hasArrow label='Edit item' fontSize='md'>
+          <IconButton
+            colorScheme="teal"
+            aria-label="Edit"
+            icon={<EditIcon />}
+            onClick={onEdit}
+            isDisabled={status === 'PENDING'}
+          >
+            Edit
+          </IconButton>
+        </Tooltip>
+      
+        <Tooltip hasArrow label='Delete item' fontSize='md'>
+          <IconButton
+            isLoading={isLoading}
+            colorScheme="red"
+            aria-label="Delete"
+            icon={<DeleteIcon />}
+            onClick={onDelete}
+          >
+            Delete
+          </IconButton>
+        </Tooltip>
+        </HStack>
+      </Box>
+    </Flex>
   )
 }
 

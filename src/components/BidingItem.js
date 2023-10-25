@@ -1,5 +1,3 @@
-'use client'
-
 import {
   Box,
   Center,
@@ -10,16 +8,31 @@ import {
   Image,
   Button,
 } from '@chakra-ui/react'
-import { useNavigate } from 'react-router'
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import PlaceBidDialog from './PlaceBidDialog';
 
-const IMAGE =
-  'https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+const BidingItem = ({ bid }) => {
+  const [isVisible, setIsVisible] = useState(false);
 
-export default function BidingItem() {
+  const {
+    id,
+    name,
+    imageLink,
+    bidDueDate,
+    startingPrice} = bid;
   const navigate = useNavigate();
 
   const displayDetails = () => {
-    navigate('/items/1');
+    navigate(`/items/${bid.id}`, { state: bid });
+  }
+
+  const onBid = () => {
+    setIsVisible(true);
+  }
+
+  const closeModal = () => {
+    setIsVisible(false);
   }
 
   return (
@@ -43,10 +56,10 @@ export default function BidingItem() {
             w: 'full',
             h: 'full',
             pos: 'absolute',
-            top: 5,
+            top: 3,
             left: 0,
-            backgroundImage: `url(${IMAGE})`,
-            filter: 'blur(15px)',
+            backgroundImage: `url(${imageLink})`,
+            filter: 'blur(10px)',
             zIndex: -1,
           }}
           _groupHover={{
@@ -59,25 +72,26 @@ export default function BidingItem() {
             height={180}
             width={282}
             objectFit={'cover'}
-            src={IMAGE}
+            src={imageLink}
             alt="#"
           />
         </Box>
         <Stack pt={2} align={'center'}>
           <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
-            Brand
+          
           </Text>
           <Heading fontSize={'xl'} fontFamily={'body'} fontWeight={500}>
-            Nice Chair, pink
+            {name}
           </Heading>
           <Stack direction={'row'} align={'center'}>
             <Text fontWeight={800} fontSize={'xl'}>
-              $57
+              ${startingPrice}
             </Text>
-            <Text textDecoration={'line-through'} color={'gray.600'}>
-              $199
-            </Text>
+            
           </Stack>
+            <Text fontSize={'md'}>
+              {bidDueDate}
+            </Text>
 
           <Stack mt={4} direction={'row'} spacing={4}>
           <Button
@@ -105,12 +119,21 @@ export default function BidingItem() {
               }}
               _focus={{
                 bg: 'teal.500',
-              }}>
+              }}
+              onClick={onBid}
+              >
               Bid
             </Button>
         </Stack>
         </Stack>
       </Box>
+
+      {isVisible && <PlaceBidDialog
+                      id={id}
+                      closeModal={closeModal}
+                      startingPrice={startingPrice}/>}
     </Center>
   )
 }
+
+export default BidingItem;

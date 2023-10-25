@@ -13,5 +13,8 @@ export const updateProduct = (payload) => {
 }
 
 export const publishProduct = (productId) => {
-  return axios.put(`/products/publish/${productId}`);
+  return axios.post(`/products/publish/${productId}`);
+}
+export const deleteProduct = (productId) => {
+  return axios.delete(`/products/delete/${productId}`);
 }
