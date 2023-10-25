@@ -6,6 +6,8 @@ import MainLayout from '../components/MainLayout';
 import Login from '../features/auth/Login';
 import Register from '../features/auth/Register';
 import ProductDetails from '../components/ProductDetails';
+import NotAuthorizedPage from '../components/NotAuthorizedPage';
+import PageNotFound from '../components/PageNotFound';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +29,11 @@ const router = createBrowserRouter([
       {
         path: "/items/:id",
         element: <ProductDetails />,
-      }
+      },
+      {
+        path: "/unauthorized",
+        element: <NotAuthorizedPage />,
+      },
     ]
   },
   {
@@ -37,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
   }
 ]);
 

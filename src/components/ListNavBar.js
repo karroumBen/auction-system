@@ -13,8 +13,10 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { useSelector } from 'react-redux';
 
-const ListNavBar = ({ title }) => {
+const ListNavBar = ({ title, handleModel }) => {
+  const auth = useSelector(state => state.auth);
   return (
     <Flex
       as="nav"
@@ -27,7 +29,7 @@ const ListNavBar = ({ title }) => {
     >
       <Text flex={1} fontSize="xl">{title}</Text>
 
-      <Box display="flex" alignItems="center" flex={1}>
+      <Box display="flex" alignItems="center" flex={2}>
         <Flex align="center" justify="space-between" flex={1}>
           <InputGroup display="flex" gap={'10px'}>
             <InputLeftElement
@@ -40,7 +42,6 @@ const ListNavBar = ({ title }) => {
               size="md"
             />
             <Button
-              colorScheme="blue"
               size="md"
               onClick={() => {
                 // Add your search logic here
@@ -83,7 +84,20 @@ const ListNavBar = ({ title }) => {
                 // Handle next page
               }}
             />
+
           </Flex>
+          {
+            auth.isSeller && 
+            <Button
+              px={6}
+              ml={10}
+              colorScheme="green"
+              size={"md"}
+              onClick={handleModel}
+            >
+              Create new
+            </Button>
+          }
         </Flex>
       </Box>
     </Flex>

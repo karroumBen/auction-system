@@ -9,5 +9,5 @@ export const register = (userDetails) => {
   console.log()
   const destination = userType === 'customer' ? 'customer' : 'seller'
 
-  return axios.post(`/${destination}/register`, userDetails);
+  return axios.post(`/register/${destination}`, userDetails);
 }

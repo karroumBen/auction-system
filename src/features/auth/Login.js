@@ -6,7 +6,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Button,
   Heading,
@@ -16,7 +15,7 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { login } from '../../store/auth/actions';
+import { login } from '../../services/auth';
 import { setUser } from '../../store/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -30,12 +29,14 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(credentials);
     setIsLoading(true);
     login(credentials).then(({ data }) => {
       const { accessToken, email, name, seller} = data;
       if(accessToken) {
         localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('username', name);
+        localStorage.setItem('isAuthenticated', true);
+        localStorage.setItem('isSeller', seller);
       }
       dispatch(setUser({ accessToken, email, name, isSeller: seller, isAuthenticated: true }));
 
@@ -47,10 +48,7 @@ const Login = () => {
         isClosable: true,
         position: 'top-right'
       })
-
-      return seller
-    })
-    .then((seller) => {
+      
       navigate(seller? '/sellers': '/customers')
     }).catch((error) => {
       toast({
@@ -61,8 +59,7 @@ const Login = () => {
         isClosable: true,
         position: 'top-right'
       })
-    })
-    .finally(() => {
+    }).finally(() => {
       setIsLoading(false);
     })
   };
