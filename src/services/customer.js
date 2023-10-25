@@ -4,8 +4,12 @@ export const getBiddingItems = () => {
   return axios.get('/products/customer');
 }
 
+export const getTransactions = () => {
+  return axios.get('/transaction');
+}
+
 export const placeBid = (payload) => {
-  const { id, price } = payload;
-  return axios.post(`/bidding/addbid/${id}/${price}`);
+  const { id, startingPrice } = payload;
+  return axios.post(`/bidding/addbid/${id}/${startingPrice}`);
 }
 

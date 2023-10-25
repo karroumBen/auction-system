@@ -16,7 +16,7 @@ import {
 import { useEffect, useState } from "react"
 import { addProduct } from "../services/seller";
 
-const NewProduct = ({ closeModal }) => {
+const NewProduct = ({ closeModal, reloadItems, editedProduct }) => {
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [productDetails, setProductDetails] = useState({
@@ -53,7 +53,10 @@ const NewProduct = ({ closeModal }) => {
         duration: 2000,
         isClosable: true,
         position: 'top-right'
-      })
+      });
+
+      handleCloseModal();
+      reloadItems();
     }).catch((error) => {
       toast({
         title: 'Ooopsie!',
@@ -66,11 +69,14 @@ const NewProduct = ({ closeModal }) => {
     })
     .finally(() => {
       setIsLoading(false);
-    })
+    });
   }
 
   useEffect(() => {
     onOpen();
+    if(editedProduct) {
+      setProductDetails(editedProduct);
+    }
   }, [])
 
   return (

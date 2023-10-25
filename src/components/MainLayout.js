@@ -9,7 +9,7 @@ import { setUser } from '../store/auth';
 const MainLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
   const auth = useSelector(state => state.auth);
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -19,18 +19,18 @@ const MainLayout = () => {
 
     const name = localStorage.getItem('username');
     const isAuthenticated = localStorage.getItem('isAuthenticated');
-    const isSeller = localStorage.getItem('isSeller');
+    const isSeller = localStorage.getItem('isSeller') == 'false' ? false : true ;
     dispatch(setUser({ accessToken,name, isAuthenticated: isAuthenticated, isSeller }));
 
-    // if(location.pathname === '/customers' && auth.isSeller) {
-    //   navigate('/unauthorized');
-    // }
+    if(location.pathname === '/customers' && isSeller) {
+      navigate('/unauthorized');
+    }
 
-    // if(location.pathname === '/sellers' && !auth.isSeller) {
-    //   navigate('/unauthorized');
-    // }
-  }, [])
-  // auth.isSeller, auth.isAuthenticated
+    if(location.pathname === '/sellers' && !isSeller) {
+      navigate('/unauthorized');
+    }
+  }, [auth.isSeller, auth.isAuthenticated])
+  
     return (
       <ChakraProvider>
         <NavBar />

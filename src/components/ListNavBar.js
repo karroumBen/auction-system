@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Flex,
@@ -11,14 +11,33 @@ import {
   Icon,
   Text,
   useColorModeValue,
+  FormControl,
 } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { useSelector } from 'react-redux';
 
-const ListNavBar = ({ title, handleModel }) => {
+const ListNavBar = ({ title, handleModel, paginate }) => {
   const auth = useSelector(state => state.auth);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  const setPagination = (e) => {
+    setItemsPerPage(e.target.value);
+    paginate(+e.target.value);
+  }
+
+  const search = () => {
+
+  }
+
+  const nextPage = () => {
+
+  }
+  const previousPage = () => {
+
+  }
   return (
     <Flex
+      mb={'15px'}
       as="nav"
       align="center"
       justify="space-between"
@@ -43,46 +62,42 @@ const ListNavBar = ({ title, handleModel }) => {
             />
             <Button
               size="md"
-              onClick={() => {
-                // Add your search logic here
-              }}
+              onClick={search}
             >
               Search
             </Button>
           </InputGroup>
 
 
-          <Flex>
+          <Flex display="flex" gap={'10px'} justify="space-between">
             <IconButton
               ml="4"
               size="sm"
               aria-label="Previous Page"
               icon={<ChevronLeftIcon />}
-              onClick={() => {
-                // Handle previous page
-              }}
+              onClick={nextPage}
             />
 
-            <Select
-              mx="4"
-              size="sm"
-              value={10}
-              onChange={(e) => {
-                // Handle the change in the number of items per page
-              }}
-            >
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-              <option value={25}>25</option>
-            </Select>
+              
+            <FormControl>
+              <Select
+                mx="2"
+                size="sm"
+                value={itemsPerPage}
+                onChange={setPagination}
+              >
+                <option value={5}>5</option>
+                <option value={15}>15</option>
+                <option value={25}>25</option>
+              </Select>
+            </FormControl>
 
             <IconButton
+              ml="4"
               size="sm"
               aria-label="Next Page"
               icon={<ChevronRightIcon />}
-              onClick={() => {
-                // Handle next page
-              }}
+              onClick={previousPage}
             />
 
           </Flex>

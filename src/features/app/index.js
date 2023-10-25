@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import BidingList from '../../components/BidingList';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../store/auth';
+import HeroSection from '../../components/HeroSection';
 
 
 const AppIndex = () => {
@@ -16,7 +17,7 @@ const AppIndex = () => {
 
     return (
         <section className="home-page">
-          <BidingList />
+          <HeroSection />
         </section>
     )
 }

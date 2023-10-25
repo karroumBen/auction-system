@@ -15,6 +15,7 @@ import {
   MenuGroup,
   MenuItem,
   MenuDivider,
+  Avatar,
 } from '@chakra-ui/react'
 import {
   HamburgerIcon,
@@ -35,6 +36,13 @@ export default function WithSubnavigation() {
     localStorage.removeItem('accessToken');
     dispatch(resetUser());
     navigate('/login')
+  }
+
+  const navigateToTransactions = () => {
+    navigate('/transactions')
+  }
+  const navigateToList = () => {
+    navigate('/customers')
   }
 
   return (
@@ -74,14 +82,22 @@ export default function WithSubnavigation() {
 
 
         { auth.isAuthenticated ?
-            <Menu z>
-              <MenuButton as={Button} colorScheme='teal'>
-                { auth.name }
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={'full'}
+                variant={'link'}
+                cursor={'pointer'}
+                minW={0}>
+                <Avatar bg='blue.400' color='white' name={auth.name} src='https://bit.ly/tioluwani-kolawole' />
               </MenuButton>
               <MenuList>
                 <MenuGroup title='Profile'>
-                  <MenuItem>My Account</MenuItem>
-                  <MenuItem>Favorite list </MenuItem>
+                  { !auth.isSeller && <>
+                    <MenuItem onClick={navigateToTransactions}>My bids</MenuItem>
+                    <MenuItem onClick={navigateToList}>Biding items</MenuItem>
+                  </>}
+                  
                 </MenuGroup>
                 <MenuDivider />
 

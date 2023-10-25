@@ -8,6 +8,7 @@ import Register from '../features/auth/Register';
 import ProductDetails from '../components/ProductDetails';
 import NotAuthorizedPage from '../components/NotAuthorizedPage';
 import PageNotFound from '../components/PageNotFound';
+import TransactionList from '../components/TransactionList';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/unauthorized",
         element: <NotAuthorizedPage />,
+      },
+      {
+        path: "/transactions",
+        element: <TransactionList />,
       },
     ]
   },
