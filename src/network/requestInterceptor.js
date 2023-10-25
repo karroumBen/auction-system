@@ -5,7 +5,7 @@ import axios from 'axios';
     const accessToken = localStorage.getItem('accessToken');
     console.log(accessToken);
     if(accessToken) {
-      config.headers.Authorization = `Basic ${accessToken}`;
+      config.headers.Authorization = ` bearer ${accessToken}`;
     }
   
     return config;
