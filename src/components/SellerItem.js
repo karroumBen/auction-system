@@ -150,7 +150,6 @@ const SellerItem = ({ product, openForEdit, reloadItems }) => {
             aria-label="Edit"
             icon={<UnlockIcon />}
             onClick={onPublish}
-            isDisabled={status !== 'PENDING'}
           >
             Publish
           </IconButton>
@@ -162,7 +161,6 @@ const SellerItem = ({ product, openForEdit, reloadItems }) => {
             aria-label="Edit"
             icon={<EditIcon />}
             onClick={onEdit}
-            isDisabled={status === 'PENDING'}
           >
             Edit
           </IconButton>

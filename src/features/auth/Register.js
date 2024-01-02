@@ -20,8 +20,10 @@ import {
 } from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { register } from '../../services/auth'
+import { useNavigate } from 'react-router'
 
 const Register = () => {
+  const navigate = useNavigate();
   const toast = useToast();
   const [userDetails, setUserDetails] = useState({
     firstName: '',
@@ -44,7 +46,6 @@ const Register = () => {
     userDetails.name = firstName + lastName;
 
     register(userDetails).then(({ data }) => {
-      console.log(data);
       toast({
         title: 'Yuupii',
         description: "Successfully done",
@@ -53,6 +54,7 @@ const Register = () => {
         isClosable: true,
         position: 'top-right'
       })
+      navigate('/login');
     }).catch((error) => {
       toast({
         title: 'Ooopsie!',
