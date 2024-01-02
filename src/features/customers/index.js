@@ -12,7 +12,6 @@ const CustomerPage= () => {
   const bids = useSelector(state => state.bidingItem.data);
 
   const paginate = (itemsPerPage) => {
-    console.log(typeof itemsPerPage)
     const temp = take(bids, itemsPerPage);
     setDisplayedBid(temp);
   }

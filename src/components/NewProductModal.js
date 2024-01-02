@@ -41,11 +41,9 @@ const NewProduct = ({ closeModal, reloadItems, editedProduct }) => {
 
   const handleFormSubmition = (e) => {
     e.preventDefault();
-    console.log(productDetails);
     setIsLoading(true);
 
     addProduct(productDetails).then(({ data }) => {
-      console.log(data);
       toast({
         title: 'Yuupii',
         description: "Successfully done",

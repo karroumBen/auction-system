@@ -41,7 +41,6 @@ const Register = () => {
   }
   const handleFormSubmition = (e) => {
     e.preventDefault();
-    console.log(userDetails);
     const { firstName, lastName } = userDetails;
     userDetails.name = firstName + lastName;
 

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import BidingList from '../../components/BidingList';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../store/auth';
 import HeroSection from '../../components/HeroSection';
@@ -10,9 +9,8 @@ const AppIndex = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(auth);
     dispatch(setUser({isSeller: true}))
-    
+
   }, []);
 
     return (

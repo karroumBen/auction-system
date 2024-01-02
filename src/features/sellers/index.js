@@ -27,7 +27,6 @@ const SellerPage = () => {
 
   const paginate = (itemsPerPage) => {
     const temp = take(products, itemsPerPage);
-    console.log('temp ', temp);
     setDisplayedProducts(temp);
   }
 

@@ -34,7 +34,6 @@ const BidingDialog = ({ closeModal, startingPrice, id }) => {
 
   const handleFormSubmition = (e) => {
     e.preventDefault();
-    console.log(bidPlaced);
     setIsLoading(true);
 
     placeBid(bidPlaced).then(({ data }) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getTransactions } from '../services/customer';
-import { Heading, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
+import { Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
 const SellerPage = () => {
   const [transactions, setTransactions] = useState([]);
@@ -8,7 +8,6 @@ const SellerPage = () => {
   const fetchProducts = () => {
     getTransactions()
       .then(({data}) => {
-        console.log(data);
         setTransactions(data);
       })
       .catch((error) => {
