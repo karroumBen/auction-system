@@ -13,11 +13,11 @@ Project is still in progress:
 
 First iteration be
 
-![Alt text](auction1.png)
-![Alt text](auction.png)
-![Alt text](<image (11).png>)
-![Alt text](<image (12).png>)
-![Alt text](<image (13).png>)
-![Alt text](<image (14).png>)
-![Alt text](<image (15).png>)
-![Alt text](<image (16).png>)
+![Alt text](./src/assets/images/auction1.png)
+![Alt text](./src/assets/images/auction.png)
+![Alt text](./src/assets/images/image%20(11).png)
+![Alt text](./src/assets/images/image%20(12).png)
+![Alt text](./src/assets/images/image%20(13).png)
+![Alt text](./src/assets/images/image%20(14).png)
+![Alt text](./src/assets/images/image%20(15).png)
+![Alt text](./src/assets/images/image%20(16).png)
